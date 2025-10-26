@@ -183,55 +183,21 @@
   <!-- SCRIPTS -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-
-  // ----------------------------
-  // HEADER ROTATION (oben)
-  // ----------------------------
-  const headerSlides = document.querySelectorAll("#header .slide");
-  let currentHeader = 0;
-  let headerInterval;
-
-  function showHeaderSlide(index) {
-    if (!headerSlides.length) return;
-    headerSlides[currentHeader].classList.remove("active");
-    currentHeader = index;
-    headerSlides[currentHeader].classList.add("active");
-  }
-
-  function nextHeaderSlide() {
-    showHeaderSlide((currentHeader + 1) % headerSlides.length);
-  }
-
-  function startHeaderRotation() {
-    if (headerSlides.length > 1) {
-      headerInterval = setInterval(nextHeaderSlide, 5000);
-    }
-  }
-
-  function setHeader(index) {
-    clearInterval(headerInterval);
-    showHeaderSlide(index);
-    startHeaderRotation();
-  }
-
-  startHeaderRotation();
-
-  // ----------------------------
-  // ROTATION DER ATTRAKTIONSBILDER
-  // ----------------------------
+  // Rotation für alle Bereiche mit data-rotate="true"
   document.querySelectorAll('[data-rotate="true"]').forEach(container => {
     const slides = container.querySelectorAll('.slide');
     let i = 0;
 
+    // Nur rotieren, wenn mehr als ein Bild vorhanden ist
     if (slides.length > 1) {
-      // Erstes Bild sichtbar machen
-      slides[i].classList.add("active");
-
+      slides[0].classList.add('active'); // erstes Bild sichtbar
       setInterval(() => {
-        slides[i].classList.remove("active");
+        slides[i].classList.remove('active');
         i = (i + 1) % slides.length;
-        slides[i].classList.add("active");
-      }, 4000);
+        slides[i].classList.add('active');
+      }, 4000); // alle 4 Sekunden wechseln
+    } else if (slides.length === 1) {
+      slides[0].classList.add('active'); // falls nur ein Bild
     }
   });
 });

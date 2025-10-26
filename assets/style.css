@@ -238,3 +238,26 @@ header.evening-mode::after {
   opacity: 1;
   z-index: 1;
 }
+/* --- BILDERROTATION – Garantierte Funktion --- */
+[data-rotate="true"] {
+  position: relative;
+  width: 100%;
+  height: 16rem; /* gleiche Höhe wie h-64 */
+  overflow: hidden;
+  border-radius: 0.75rem;
+}
+
+[data-rotate="true"] img.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.6s ease-in-out;
+}
+
+[data-rotate="true"] img.slide.active {
+  opacity: 1;
+  z-index: 1;
+}
