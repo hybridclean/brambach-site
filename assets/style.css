@@ -45,16 +45,15 @@ header p {
   opacity: 0;
   position: absolute;
   inset: 0;
-  transition: opacity 1.5s ease-in-out;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 1.6s ease-in-out;
   filter: brightness(1.05) contrast(1.05);
 }
 .slide.active {
   opacity: 1;
-}
-
-/* Goldene Lichtreflexion */
-#light-glow {
-  mix-blend-mode: screen;
+  z-index: 1;
 }
 
 /* Knopfdesign */
@@ -86,37 +85,24 @@ a.bg-red-700:hover::after {
 }
 
 /* Abschnittstitel */
-h2, h3 {
-  color: #222;
-  font-weight: 700;
-}
+h2, h3 { color: #222; font-weight: 700; }
 
 /* Karten (Attraktionen) */
 .bg-white {
   background-color: white;
-}
-.shadow-lg {
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-}
-.rounded-2xl {
-  border-radius: 1.2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .bg-white:hover {
   transform: translateY(-4px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
+.shadow-lg { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
+.rounded-2xl { border-radius: 1.2rem; }
 
 /* Textakzente */
-.text-red-700 {
-  color: var(--primary-red);
-}
-.text-gray-600 {
-  color: #555;
-}
-.text-gray-500 {
-  color: #777;
-}
+.text-red-700 { color: var(--primary-red); }
+.text-gray-600 { color: #555; }
+.text-gray-500 { color: #777; }
 
 /* FAQ-Stil */
 details {
@@ -170,34 +156,18 @@ img {
   display: block;
 }
 
-/* Kleine optische Extras */
-section {
-  scroll-margin-top: 5rem;
-}
-p {
-  margin-bottom: 0.75rem;
-}
+/* Allgemeine Abstände */
+section { scroll-margin-top: 5rem; }
+p { margin-bottom: 0.75rem; }
 
-/* Sanftere Scrollbewegung */
-html {
-  scroll-behavior: smooth;
-}
-/* -------------------------------------------------
-   Dynamischer Übergang: Abend → Nacht im Header
--------------------------------------------------- */
-
-/* Grundzustand für Header-Text */
+/* Dynamischer Übergang: Abend → Nacht */
 header .text-transition {
   transition: color 2s ease, text-shadow 2s ease;
 }
-
-/* Nachtmodus */
 header.night-mode .text-transition {
   color: #fff;
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
 }
-
-/* Abdunkelung des Hintergrunds bei Nacht */
 header.night-mode::after {
   content: "";
   position: absolute;
@@ -206,8 +176,6 @@ header.night-mode::after {
   transition: opacity 2s ease-in-out;
   pointer-events: none;
 }
-
-/* Abendmodus mit leicht goldenem Glow */
 header.evening-mode::after {
   content: "";
   position: absolute;
@@ -216,54 +184,70 @@ header.evening-mode::after {
   transition: opacity 2s ease-in-out;
   pointer-events: none;
 }
-.slide {
-  opacity: 0;
-  transition: opacity 1.5s ease-in-out;
-  position: absolute;
-  inset: 0;
-}
 
-.slide.active {
-  opacity: 1;
-}
-/* Fade-Effekt für Bilderrotation */
-.slide {
-  opacity: 0;
-  position: absolute;
-  inset: 0;
-  transition: opacity 1.6s ease-in-out;
-}
-
-.slide.active {
-  opacity: 1;
-  z-index: 1;
-}
-/* --- BILDERROTATION – Garantierte Funktion --- */
+/* --- BILDERROTATION --- */
 [data-rotate="true"] {
   position: relative;
   width: 100%;
-  height: 16rem; /* gleiche Höhe wie h-64 */
+  height: 16rem;
   overflow: hidden;
   border-radius: 0.75rem;
 }
-
-[data-rotate="true"] {
-  position: relative;
-  height: 16rem;
-}
-
 [data-rotate="true"] .slide {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   opacity: 0;
-  transition: opacity 1.5s ease-in-out;
+  transition: opacity 1.6s ease-in-out;
 }
-
 [data-rotate="true"] .slide.active {
   opacity: 1;
   z-index: 2;
 }
 
+/* Dark-Mode */
+body.dark-mode { background-color: #111827; color: #f9fafb; }
+body.dark-mode nav { background-color: rgba(31, 41, 55, 0.95); }
+body.dark-mode footer { background-color: #1f2937; }
+
+/* -------------------------------------------
+   Pause/Play Overlay mit Puls-Effekt
+-------------------------------------------- */
+.pause-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+  border-radius: 0.75rem;
+  z-index: 3;
+}
+.pause-overlay.visible { opacity: 1; }
+
+.pause-overlay svg {
+  filter: drop-shadow(0 0 10px rgba(255,191,36,0.6))
+          drop-shadow(0 0 4px rgba(185,28,28,0.5));
+  transform: scale(1);
+  transition: transform 0.3s ease;
+}
+.pause-overlay.visible svg {
+  animation: pulse 0.8s ease-out;
+  transform: scale(1.1);
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  40% { transform: scale(1.2); opacity: 1; }
+  70% { transform: scale(1.05); }
+  100% { transform: scale(1.1); }
+}
+
+[data-rotate="true"]:hover { cursor: pointer; }
+.icon-play { display: none; }
