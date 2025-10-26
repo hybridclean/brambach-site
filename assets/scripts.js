@@ -19,13 +19,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const slides = section.querySelectorAll(".slide");
     if (slides.length > 1) {
       let index = 0;
-      setInterval(() => {
-        slides[index].classList.remove("active");
-        index = (index + 1) % slides.length;
-        slides[index].classList.add("active");
-      }, 6000);
-    }
-  });
+document.querySelectorAll('[data-rotate="true"]').forEach(section => {
+  const slides = section.querySelectorAll('.slide');
+  let current = 0;
+  if (slides.length > 1) {
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 4000);
+  }
+});
+
 });
 
 // --- Tag/Nacht-Schalter ---
