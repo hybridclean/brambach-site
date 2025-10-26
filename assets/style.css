@@ -247,17 +247,23 @@ header.evening-mode::after {
   border-radius: 0.75rem;
 }
 
-[data-rotate="true"] img.slide {
+[data-rotate="true"] {
+  position: relative;
+  height: 16rem;
+}
+
+[data-rotate="true"] .slide {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 1.6s ease-in-out;
+  transition: opacity 1.5s ease-in-out;
 }
 
-[data-rotate="true"] img.slide.active {
+[data-rotate="true"] .slide.active {
   opacity: 1;
-  z-index: 1;
+  z-index: 2;
 }
+

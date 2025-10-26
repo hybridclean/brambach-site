@@ -183,25 +183,34 @@
   <!-- SCRIPTS -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  // Rotation für alle Bereiche mit data-rotate="true"
+  console.log("✅ Rotation Script gestartet");
+
   document.querySelectorAll('[data-rotate="true"]').forEach(container => {
     const slides = container.querySelectorAll('.slide');
-    let i = 0;
+    if (slides.length === 0) {
+      console.warn("⚠️ Kein Bild gefunden in", container);
+      return;
+    }
 
-    // Nur rotieren, wenn mehr als ein Bild vorhanden ist
+    // Erstes Bild aktivieren
+    let i = 0;
+    slides[0].classList.add("active");
+
     if (slides.length > 1) {
-      slides[0].classList.add('active'); // erstes Bild sichtbar
+      console.log(`🎡 Starte Rotation mit ${slides.length} Bildern`);
       setInterval(() => {
-        slides[i].classList.remove('active');
+        slides[i].classList.remove("active");
         i = (i + 1) % slides.length;
-        slides[i].classList.add('active');
-      }, 4000); // alle 4 Sekunden wechseln
-    } else if (slides.length === 1) {
-      slides[0].classList.add('active'); // falls nur ein Bild
+        slides[i].classList.add("active");
+        console.log("➡️ Zeige Slide:", i + 1);
+      }, 4000);
+    } else {
+      console.log("🖼️ Nur ein Bild vorhanden, keine Rotation");
     }
   });
 });
 </script>
+
 
 
 
