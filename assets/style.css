@@ -1,0 +1,218 @@
+/* -----------------------------------------
+   Grunddesign – Schaustellerbetrieb Brambach
+-------------------------------------------- */
+:root {
+  --primary-red: #b91c1c;
+  --primary-gold: #fbbf24;
+  --warm-gray: #f9f9f8;
+  --deep-gray: #1f2937;
+}
+
+/* Grundlayout */
+body {
+  background-color: var(--warm-gray);
+  color: #333;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+/* Navigation */
+nav a {
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+nav a:hover {
+  color: var(--primary-red);
+  border-bottom: 2px solid var(--primary-red);
+}
+
+/* Header mit sanftem Overlay */
+header {
+  position: relative;
+  background: var(--deep-gray);
+  color: white;
+  overflow: hidden;
+}
+header h1,
+header p {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Übergänge für Slides */
+.slide {
+  opacity: 0;
+  position: absolute;
+  inset: 0;
+  transition: opacity 1.5s ease-in-out;
+  filter: brightness(1.05) contrast(1.05);
+}
+.slide.active {
+  opacity: 1;
+}
+
+/* Goldene Lichtreflexion */
+#light-glow {
+  mix-blend-mode: screen;
+}
+
+/* Knopfdesign */
+a.bg-red-700 {
+  background-color: var(--primary-red);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+a.bg-red-700::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 215, 0, 0.4), transparent);
+  transform: skewX(-25deg);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+a.bg-red-700:hover {
+  background-color: #dc2626;
+  transform: scale(1.05);
+}
+a.bg-red-700:hover::after {
+  left: 120%;
+  opacity: 1;
+}
+
+/* Abschnittstitel */
+h2, h3 {
+  color: #222;
+  font-weight: 700;
+}
+
+/* Karten (Attraktionen) */
+.bg-white {
+  background-color: white;
+}
+.shadow-lg {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+.rounded-2xl {
+  border-radius: 1.2rem;
+}
+.bg-white:hover {
+  transform: translateY(-4px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Textakzente */
+.text-red-700 {
+  color: var(--primary-red);
+}
+.text-gray-600 {
+  color: #555;
+}
+.text-gray-500 {
+  color: #777;
+}
+
+/* FAQ-Stil */
+details {
+  border-left: 4px solid var(--primary-red);
+  background: white;
+  transition: all 0.3s ease;
+}
+details[open] {
+  background: #fff7f7;
+  border-color: var(--primary-gold);
+}
+
+/* Footer */
+footer {
+  background-color: var(--deep-gray);
+  color: #e5e5e5;
+  font-size: 0.9rem;
+}
+footer a {
+  color: var(--primary-gold);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+footer a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+/* Buttons allgemein */
+button, .btn {
+  background-color: var(--primary-red);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+button:hover, .btn:hover {
+  background-color: #a4161a;
+  transform: translateY(-2px);
+}
+
+/* Responsive Bilder */
+img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  display: block;
+}
+
+/* Kleine optische Extras */
+section {
+  scroll-margin-top: 5rem;
+}
+p {
+  margin-bottom: 0.75rem;
+}
+
+/* Sanftere Scrollbewegung */
+html {
+  scroll-behavior: smooth;
+}
+/* -------------------------------------------------
+   Dynamischer Übergang: Abend → Nacht im Header
+-------------------------------------------------- */
+
+/* Grundzustand für Header-Text */
+header .text-transition {
+  transition: color 2s ease, text-shadow 2s ease;
+}
+
+/* Nachtmodus */
+header.night-mode .text-transition {
+  color: #fff;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+/* Abdunkelung des Hintergrunds bei Nacht */
+header.night-mode::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 20, 0.4);
+  transition: opacity 2s ease-in-out;
+  pointer-events: none;
+}
+
+/* Abendmodus mit leicht goldenem Glow */
+header.evening-mode::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(255, 200, 100, 0.15), transparent);
+  transition: opacity 2s ease-in-out;
+  pointer-events: none;
+}
