@@ -182,34 +182,61 @@
 
   <!-- SCRIPTS -->
 <script>
-  // Header rotation (wie gehabt)
+document.addEventListener("DOMContentLoaded", () => {
+
+  // ----------------------------
+  // HEADER ROTATION (oben)
+  // ----------------------------
   const headerSlides = document.querySelectorAll("#header .slide");
   let currentHeader = 0;
   let headerInterval;
 
   function showHeaderSlide(index) {
+    if (!headerSlides.length) return;
     headerSlides[currentHeader].classList.remove("active");
     currentHeader = index;
     headerSlides[currentHeader].classList.add("active");
   }
-  function nextHeaderSlide() { showHeaderSlide((currentHeader + 1) % headerSlides.length); }
-  function startHeaderRotation() { headerInterval = setInterval(nextHeaderSlide, 5000); }
-  function setHeader(index) { clearInterval(headerInterval); showHeaderSlide(index); startHeaderRotation(); }
+
+  function nextHeaderSlide() {
+    showHeaderSlide((currentHeader + 1) % headerSlides.length);
+  }
+
+  function startHeaderRotation() {
+    if (headerSlides.length > 1) {
+      headerInterval = setInterval(nextHeaderSlide, 5000);
+    }
+  }
+
+  function setHeader(index) {
+    clearInterval(headerInterval);
+    showHeaderSlide(index);
+    startHeaderRotation();
+  }
+
   startHeaderRotation();
 
-  // *** NUR Container mit data-rotate="true" rotieren ***
+  // ----------------------------
+  // ROTATION DER ATTRAKTIONSBILDER
+  // ----------------------------
   document.querySelectorAll('[data-rotate="true"]').forEach(container => {
     const slides = container.querySelectorAll('.slide');
+    let i = 0;
+
     if (slides.length > 1) {
-      let i = 0;
+      // Erstes Bild sichtbar machen
+      slides[i].classList.add("active");
+
       setInterval(() => {
-        slides[i].classList.remove('active');
+        slides[i].classList.remove("active");
         i = (i + 1) % slides.length;
-        slides[i].classList.add('active');
+        slides[i].classList.add("active");
       }, 4000);
     }
   });
+});
 </script>
+
 
 
 </body>
